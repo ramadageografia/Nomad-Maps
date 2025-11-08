@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nomad Maps</title>
+  <link rel="stylesheet" href="Assets/CSS/style.css" />
+
+  <!-- Ícone do site -->
+  <link rel="icon" href="Assets/Imagens/logo_circular.png" type="image/png" />
+
+  <!-- Bibliotecas externas -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+  <!-- Seção de topo -->
+  <header class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <img src="Assets/Imagens/logo_circular.png" alt="Nomad Maps Logo" class="logo">
+      <h1 class="neon-text">Nomad Maps</h1>
+      <p>Cartografia da Cultura Psicodélica Global</p>
+    </div>
+  </header>
+
+  <!-- Seção principal -->
+  <main>
+    <section class="map-section">
+      <h2>Mapa Global de Festivais</h2>
+      <div id="map"></div>
+    </section>
+
+    <section class="chart-section">
+      <h2>Distribuição de Festivais por Continente</h2>
+      <div id="chart"></div>
+    </section>
+
+    <section class="cta-section">
+      <h2 class="neon-text">Pronto para sua próxima jornada?</h2>
+      <p>Conecte-se com nossa equipe e descubra os destinos mais vibrantes da cena global.</p>
+      <a href="mailto:contato@nomadmaps.com" class="cta-button">FALE CONOSCO</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Nomad Maps — Geografia da Cultura Psicodélica</p>
+  </footer>
+
+  <!-- Script para mapa e gráfico -->
+  <script>
+    // === Leaflet Map ===
+    const map = L.map('map').setView([20, 0], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    // Exemplo: marcadores de festivais
+    const festivals = [
+      { name: "Boom Festival", coords: [40.0, -7.8] },
+      { name: "Ozora Festival", coords: [46.9, 18.5] },
+      { name: "Universo Paralello", coords: [-13.3, -38.9] },
+    ];
+
+    festivals.forEach(f => {
+      L.marker(f.coords).addTo(map).bindPopup(`<b>${f.name}</b>`);
+    });
+
+    // === Plotly Chart ===
+    const continents = ["Europa", "América do Sul", "Ásia", "Oceania", "América do Norte"];
+    const counts = [14, 9, 4, 2, 3];
+
+    const data = [{
+      x: continents,
+      y: counts,
+      type: "bar",
+      marker: { color: "rgba(0,255,200,0.8)" }
+    }];
+
+    Plotly.newPlot('chart', data, {
+      paper_bgcolor: "transparent",
+      plot_bgcolor: "transparent",
+      font: { color: "#fff" },
+    });
+  </script>
+</body>
+</html>
