@@ -1,1 +1,1 @@
-# Nomad-Maps
+Nomad Maps - package ready for GitHub Pages
