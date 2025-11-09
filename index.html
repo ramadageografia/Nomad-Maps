@@ -1,156 +1,150 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <base href="https://ramadageografia.github.io/Nomad-Maps/">
-  <title>Nomad Maps 🌍</title>
-
-  <!-- Leaflet CSS -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    crossorigin=""
-  />
-
-  <style>
-    html, body {
-      margin: 0;
-      height: 100%;
-      font-family: "Poppins", sans-serif;
-      background: radial-gradient(circle at 20% 20%, #0a0a0a, #000);
-      color: #f2f2f2;
-      overflow: hidden;
-    }
-
-    header {
-      background: linear-gradient(90deg, #ff0080, #7928ca);
-      color: white;
-      text-align: center;
-      padding: 20px 0;
-      font-size: 2rem;
-      letter-spacing: 1px;
-      font-weight: bold;
-      text-transform: uppercase;
-      box-shadow: 0 0 20px #ff0080;
-    }
-
-    #map {
-      height: calc(100vh - 120px);
-      width: 100%;
-      border-top: 3px solid #ff0080;
-      border-bottom: 3px solid #ff0080;
-    }
-
-    footer {
-      background: #111;
-      color: #ccc;
-      text-align: center;
-      padding: 15px 0;
-      font-size: 1.1rem;
-      border-top: 1px solid #333;
-    }
-
-    footer a {
-      color: #ff4f9a;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-      color: #ff79c6;
-    }
-
-    .flyer {
-      width: 250px;
-      border-radius: 10px;
-      margin-bottom: 5px;
-      box-shadow: 0 0 10px #0008;
-    }
-
-    .festival-title {
-      font-weight: bold;
-      font-size: 1.1rem;
-      margin: 8px 0 3px;
-      color: #222;
-    }
-
-    .popup-content {
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOMAD MAPS - Mapeamos a Geografia do Trance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-  <header>
-    NOMAD MAPS — Festivais Psytrance pelo Mundo
-  </header>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><span class="neon-text">NOMAD MAPS</span></div>
+                <div class="nav-links">
+                    <a href="#mapa">Mapa Global</a>
+                    <a href="#festivais">Festivais</a>
+                    <a href="#filosofia">Filosofia</a>
+                    <a href="#contato">Contato</a>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-  <div id="map"></div>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="neon-text">NOMAD MAPS</h1>
+            <p>Mapeamos a Geografia do Trance Global</p>
+            <a href="#mapa" class="cta-button">EXPLORAR MAPA</a>
+        </div>
+    </section>
 
-  <footer>
-    🌐 Projeto por Ramada Geografia |
-    <a href="https://instagram.com/ramadageografia" target="_blank">
-      💫 Instagram @ramadageografia
-    </a>
-  </footer>
-
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-
-  <script>
-    // Inicializa o mapa
-    const map = L.map('map', { worldCopyJump: true }).setView([10, 0], 2);
-
-    // Fundo escuro
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap & CartoDB',
-      subdomains: 'abcd',
-      maxZoom: 19
-    }).addTo(map);
-
-    // Ícone padrão colorido
-    function getColoredIcon(color) {
-      return L.icon({
-        iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [0, -40],
-        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-        shadowSize: [41, 41]
-      });
-    }
-
-    // Carregar JSON
-    fetch('festivals.json')
-      .then(r => r.json())
-      .then(festivals => {
-        festivals.forEach(f => {
-          const icon = f.icone
-            ? L.icon({
-                iconUrl: f.icone,
-                iconSize: [40, 40],
-                iconAnchor: [20, 40],
-                popupAnchor: [0, -35]
-              })
-            : getColoredIcon("violet");
-
-          const popup = `
-            <div class="popup-content">
-              ${f.flyer ? `<img src="${f.flyer}" class="flyer" alt="${f.nome} Flyer">` : ""}
-              <div class="festival-title">${f.nome}</div>
-              <b>${f.pais}</b><br>
-              <i>${f.localizacao}</i><br>
-              🎧 Vertente: ${f.vertente}<br>
-              📅 Fundado em: ${f.ano_fundacao}<br>
-              🔗 <a href="${f.link}" target="_blank">Site oficial</a>
+    <!-- Mapa Interativo -->
+    <section id="mapa" class="map-section">
+        <div class="container">
+            <h2 class="section-title"><span class="neon-text">Mapa Global</span> de Festivais</h2>
+            
+            <div class="map-controls">
+                <div class="filter-group">
+                    <select id="continentFilter" class="nomad-select">
+                        <option value="">Todos os Continentes</option>
+                        <option value="América do Sul">América do Sul</option>
+                        <option value="Europa">Europa</option>
+                        <option value="América do Norte">América do Norte</option>
+                        <option value="Ásia">Ásia</option>
+                        <option value="África">África</option>
+                        <option value="Oceania">Oceania</option>
+                    </select>
+                    
+                    <select id="genreFilter" class="nomad-select">
+                        <option value="">Todos os Gêneros</option>
+                        <option value="Psytrance - multigênero">Psytrance</option>
+                        <option value="Darkpsy">Darkpsy</option>
+                        <option value="Hitech Psytrance">Hitech</option>
+                    </select>
+                    
+                    <select id="statusFilter" class="nomad-select">
+                        <option value="">Todos os Status</option>
+                        <option value="Ativo">Ativos</option>
+                        <option value="Inativo">Inativos</option>
+                    </select>
+                </div>
+                
+                <div class="map-stats">
+                    <span id="festivalCount">0</span> Festivais no Mapa
+                </div>
             </div>
-          `;
 
-          L.marker([f.latitude, f.longitude], { icon }).addTo(map).bindPopup(popup);
-        });
-      })
-      .catch(err => console.error("Erro ao carregar festivals.json:", err));
-  </script>
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-sidebar">
+                    <div class="sidebar-header">
+                        <h3>Lista de Festivais</h3>
+                        <div class="search-box">
+                            <input type="text" id="searchInput" placeholder="Buscar festivais..." class="nomad-input">
+                        </div>
+                    </div>
+                    <div class="festival-list" id="festivalList">
+                        <!-- Festivais carregados via JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Festivais em Destaque -->
+    <section class="featured-festivals" id="festivais">
+        <div class="container">
+            <h2 class="section-title"><span class="neon-text">Festivais</span> em Destaque</h2>
+            <div class="festival-grid" id="featuredFestivals">
+                <!-- Festivais em destaque carregados via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Filosofia -->
+    <section id="filosofia" class="philosophy-section">
+        <div class="container">
+            <h2 class="section-title">Nossa Filosofia</h2>
+            <blockquote>
+                "Não somos turistas, somos nômades da alma. Mapeamos a geografia do trance global."
+            </blockquote>
+            <p>Conectamos a comunidade psytrance através do mapeamento completo de festivais, eventos e experiências transformadoras ao redor do mundo.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contato">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Mapa do Site</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#mapa">Mapa Global</a></li>
+                        <li><a href="#festivais">Festivais</a></li>
+                        <li><a href="#filosofia">Filosofia</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Conecte-se</h4>
+                    <div class="social-links">
+                        <a href="#" title="Instagram">👽</a>
+                        <a href="#" title="Facebook">👁️</a>
+                        <a href="#" title="WhatsApp">💬</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>contato@nomadmaps.com</p>
+                    <p>+55 (XX) 9XXXX-XXXX</p>
+                    <p>CNPJ: XX.XXX.XXX/0001-XX</p>
+                </div>
+            </div>
+            
+            <div class="legal-info">
+                &copy; 2024 NOMAD MAPS - Mapeando a Geografia do Trance Global. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/map.js"></script>
 </body>
 </html>
