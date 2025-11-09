@@ -1,109 +1,164 @@
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at top, #0b0b0d, #050505);
-  color: #fff;
-  text-align: center;
-}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nomad Maps — Global Trance Festivals</title>
 
-.hero {
-  position: relative;
-  height: 60vh;
-  overflow: hidden;
-}
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-.hero .banner {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.4;
-}
+  <!-- Estilo -->
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: radial-gradient(ellipse at center, #050505 0%, #000 100%);
+      color: #eee;
+      font-family: "Orbitron", sans-serif;
+      overflow: hidden;
+    }
 
-.hero .overlay {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+    #banner {
+      width: 100%;
+      height: 120px;
+      background: url("Assets/Imagens/banner_superior.jpg") center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px #0ff8;
+      border-bottom: 2px solid #0ff5;
+    }
 
-.logo {
-  width: 120px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
+    #banner h1 {
+      text-shadow: 0 0 15px #0ff;
+      color: #fff;
+      font-size: 2.2rem;
+      background: rgba(0,0,0,0.5);
+      padding: 10px 30px;
+      border-radius: 20px;
+    }
 
-h1 {
-  font-size: 2.5rem;
-  color: #00ffff;
-  text-shadow: 0 0 10px #0ff;
-}
+    #map {
+      height: calc(100% - 120px);
+      width: 100%;
+      background: url("Assets/Imagens/fundo_cosmico.jpg") center/cover no-repeat;
+    }
 
-p {
-  color: #ccc;
-}
+    .legend {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 0.9em;
+      box-shadow: 0 0 10px #fff2;
+    }
 
-nav ul {
-  display: flex;
-  justify-content: center;
-  background-color: rgba(0,0,0,0.6);
-  list-style: none;
-  padding: 10px;
-  margin: 0;
-}
+    .legend div {
+      margin: 4px 0;
+      display: flex;
+      align-items: center;
+    }
 
-nav li {
-  margin: 0 20px;
-}
+    .legend span {
+      width: 14px;
+      height: 14px;
+      margin-right: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
 
-nav a {
-  text-decoration: none;
-  color: #0ff;
-  font-weight: bold;
-  transition: 0.3s;
-}
+    /* Neon Glow para os marcadores */
+    .neon-marker {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      box-shadow: 0 0 12px 2px currentColor;
+      background-color: currentColor;
+      opacity: 0.9;
+      transition: transform 0.2s ease;
+    }
 
-nav a:hover {
-  color: #fff;
-  text-shadow: 0 0 10px #0ff;
-}
+    .neon-marker:hover {
+      transform: scale(1.5);
+    }
+  </style>
+</head>
+<body>
 
-#festivalMap {
-  height: 500px;
-  margin: 20px;
-  border-radius: 10px;
-}
+  <div id="banner">
+    <h1>🌍 Nomad Maps — Global Trance Festivals</h1>
+  </div>
 
-.cards {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 30px;
-}
+  <div id="map"></div>
 
-.card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(0,255,255,0.2);
-  border-radius: 10px;
-  width: 280px;
-  transition: 0.4s;
-}
+  <div class="legend" id="legend">
+    <strong>🎶 Subvertentes</strong><br>
+    <div><span style="background:#00aaff;"></span> Full On</div>
+    <div><span style="background:#ff66cc;"></span> Prog</div>
+    <div><span style="background:#00ff66;"></span> Forest</div>
+    <div><span style="background:#000000;"></span> Darkpsy</div>
+    <div><span style="background:#ff3333;"></span> Hitech</div>
+  </div>
 
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #0ff;
-}
+  <script>
+    // Inicializa o mapa
+    const map = L.map('map', {
+      zoomControl: true,
+      scrollWheelZoom: true,
+      worldCopyJump: true
+    }).setView([10, 10], 2);
 
-.card img {
-  width: 100%;
-  border-radius: 10px 10px 0 0;
-}
+    // Camada de fundo
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap, Nomad Maps'
+    }).addTo(map);
 
-footer {
-  background: rgba(0,0,0,0.7);
-  padding: 20px;
-  font-size: 0.9rem;
-}
+    // Função para definir cor por subvertente
+    function getColor(sub) {
+      if (!sub) return "#888";
+      sub = sub.toLowerCase();
+      if (sub.includes("full")) return "#00aaff";
+      if (sub.includes("prog")) return "#ff66cc";
+      if (sub.includes("forest")) return "#00ff66";
+      if (sub.includes("dark")) return "#000000";
+      if (sub.includes("high") || sub.includes("hitech")) return "#ff3333";
+      return "#ccc";
+    }
+
+    // Carregar dados (substituir pelo caminho real no GitHub)
+    fetch("Assets/Dados/festivals.json")
+      .then(resp => resp.json())
+      .then(data => {
+        data.forEach(f => {
+          if (!f.WKT) return;
+          const coords = f.WKT.match(/POINT\s*\(([-\d\.]+)\s+([-\d\.]+)\)/);
+          if (!coords) return;
+          const lon = parseFloat(coords[1]);
+          const lat = parseFloat(coords[2]);
+          const color = getColor(f["Subvertentes"]);
+
+          const div = L.divIcon({
+            className: "neon-marker",
+            iconSize: [16,16],
+            html: `<div style="color:${color}"></div>`
+          });
+
+          const marker = L.marker([lat, lon], { icon: div }).addTo(map);
+
+          marker.bindPopup(`
+            <strong>${f.Nome}</strong><br>
+            <em>${f.Pais} — ${f.Continente}</em><br>
+            <b>Vertente:</b> ${f["Vertente principal"]}<br>
+            <b>Subvertentes:</b> ${f.Subvertentes}<br>
+            <b>Status:</b> ${f.Status}
+          `);
+        });
+      })
+      .catch(err => console.error("Erro ao carregar dados:", err));
+  </script>
+</body>
+</html>
