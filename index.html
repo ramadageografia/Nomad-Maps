@@ -1,64 +1,109 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nomad Maps</title>
-  <link rel="stylesheet" href="Assets/CSS/style.css">
-  <link rel="icon" href="Assets/Imagens/logo_circular.png">
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-</head>
-<body>
-  <header class="hero">
-    <img src="Assets/Imagens/logo_circular.png" class="logo" alt="Nomad Maps Logo">
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="destinos.html">Destinos</a>
-      <a href="contato.html">Contato</a>
-    </nav>
-    <div class="banner">
-      <img src="https://raw.githubusercontent.com/ramadageografia/Nomad-Maps/main/imagens/imagens/banner_superior.jpg" alt="Banner Nomad Maps">
-      <div class="banner-texto">
-        <h1>Nomad Maps</h1>
-        <p>Explore o mundo dos festivais psicodélicos</p>
-      </div>
-    </div>
-  </header>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #0b0b0d, #050505);
+  color: #fff;
+  text-align: center;
+}
 
-  <section class="map-section">
-    <h2>Mapa Interativo</h2>
-    <div id="map"></div>
-  </section>
+.hero {
+  position: relative;
+  height: 60vh;
+  overflow: hidden;
+}
 
-  <section class="featured">
-    <h2>Festivais em Destaque</h2>
-    <div class="gallery">
-      <img src="https://raw.githubusercontent.com/ramadageografia/Nomad-Maps/main/imagens/imagens/ozora.jpg" alt="Ozora Festival">
-      <img src="https://raw.githubusercontent.com/ramadageografia/Nomad-Maps/main/imagens/imagens/modem.jpg" alt="Modem Festival">
-      <img src="https://raw.githubusercontent.com/ramadageografia/Nomad-Maps/main/imagens/imagens/flyer_up.jpg" alt="Universo Paralello">
-    </div>
-  </section>
+.hero .banner {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+}
 
-  <footer>
-    <p>© 2025 Nomad Maps</p>
-  </footer>
+.hero .overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  <script>
-    var map = L.map('map').setView([20, 0], 2);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
-    }).addTo(map);
+.logo {
+  width: 120px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
 
-    var festivals = [
-      { name: 'Ozora Festival', coords: [46.63, 18.25] },
-      { name: 'Modem Festival', coords: [45.05, 15.96] },
-      { name: 'Universo Paralello', coords: [-13.15, -38.89] }
-    ];
+h1 {
+  font-size: 2.5rem;
+  color: #00ffff;
+  text-shadow: 0 0 10px #0ff;
+}
 
-    festivals.forEach(f => {
-      L.marker(f.coords).addTo(map).bindPopup(f.name);
-    });
-  </script>
-</body>
-</html>
+p {
+  color: #ccc;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.6);
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+}
+
+nav li {
+  margin: 0 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #0ff;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #0ff;
+}
+
+#festivalMap {
+  height: 500px;
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 30px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(0,255,255,0.2);
+  border-radius: 10px;
+  width: 280px;
+  transition: 0.4s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #0ff;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+}
+
+footer {
+  background: rgba(0,0,0,0.7);
+  padding: 20px;
+  font-size: 0.9rem;
+}
